@@ -7,13 +7,23 @@ export async function GET(req: NextRequest) {
 
   const ipAdress = req.headers.get("x-real-ip"); // presa dell'ip
 
-  const ipEpas = await fetch("https://ip-api.com/json/" + ipAdress); // fetch dell'ip
+  let informazioniInBaseIp;
+  try {
+    const apiResponse = await fetch(`http://ip-api.com/json/${ipAdress}`);
 
-  const ip = await ipEpas.json();
+    if (!apiResponse.ok) {
+      throw new Error("Network response was not ok: " + apiResponse.statusText);
+    }
+
+    informazioniInBaseIp = await apiResponse.json(); // Parse the JSON data
+  } catch (error) {
+    console.error("There was a problem with the fetch operation:", error);
+    informazioniInBaseIp = { error: "Could not retrieve information" }; // Handle error gracefully
+  }
 
   const time = new Date().toISOString(); // data e ora
 
-  await console.log({ getTheHeaders, ip, time }); // log dei dati
+  await console.log({ getTheHeaders, informazioniInBaseIp, time }); // log dei dati
 
   //redirect to homepage
   const imageUrl = new URL(
