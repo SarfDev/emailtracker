@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
   //redirect to homepage
   const imageUrl = new URL(
     "/immagine.png",
-    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+    "https://emailtracker-jew2-git-main-sarfdevs-projects.vercel.app/"
   );
   const imageResponse = await fetch(imageUrl);
 
