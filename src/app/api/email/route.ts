@@ -21,9 +21,9 @@ export async function GET(req: NextRequest) {
     informazioniInBaseIp = { error: "Could not retrieve information" }; // Handle error gracefully
   }
 
-  const time = new Date().toISOString(); // data e ora
+  const time = new Date().toLocaleDateString("it-IT", { timeZone: "UTC" }); // data e ora
 
-  await console.log({ getTheHeaders, informazioniInBaseIp, time }); // log dei dati
+  await console.log({ getTheHeaders, informazioniInBaseIp, time, ipAdress }); // log dei dati
 
   //redirect to homepage
   const imageUrl = new URL(
